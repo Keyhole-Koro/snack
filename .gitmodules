@@ -1,3 +1,6 @@
 [submodule "snackTraveler"]
 	path = snackTraveler
 	url = https://github.com/Keyhole-Koro/snackTraveler.git
+[submodule "snackPersona"]
+	path = snackPersona
+	url = https://github.com/Keyhole-Koro/snackPersona.git
