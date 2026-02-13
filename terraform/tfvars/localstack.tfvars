@@ -1,0 +1,5 @@
+env         = "local"
+project     = "snack"
+region      = "us-east-1"
+bucket_name = "snack-frontend-local"
+table_name  = "SnackTable"

@@ -1,0 +1,5 @@
+env         = "prod"
+project     = "snack"
+region      = "us-east-1"
+bucket_name = "snack-frontend-prod-12345"
+table_name  = "SnackTable-Prod"

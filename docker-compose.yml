@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - "4566:4566" # LocalStack Gateway
+      - "4510-4559:4510-4559" # External services port range
+    environment:
+      - SERVICES=dynamodb,s3,lambda,cloudformation,sts,iam
+      - DEBUG=${DEBUG:-0}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./localstack_init:/etc/localstack/init/ready.d"
+    networks:
+      - snack-net
+
+  # Local Backend (Go) connected to LocalStack
+  backend:
+    build:
+      context: ./snackWeb/backend
+      dockerfile: Dockerfile.dev # We'll create this simplified dev Dockerfile
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE=SnackTable
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    ports:
+      - "13579:13579"
+    depends_on:
+      - localstack
+    networks:
+      - snack-net
+    volumes:
+      - ./snackWeb/backend:/app
+
+  # Workspace for DevContainer
+  workspace:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      - .:/workspace:cached
+    command: sleep infinity
+    networks:
+      - snack-net
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+
+networks:
+  snack-net:
+    driver: bridge
