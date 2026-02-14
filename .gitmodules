@@ -1,9 +1,11 @@
-[submodule "snackTraveler"]
-	path = snackTraveler
+	path = apps/persona/src/snackPersona/traveler
 	url = https://github.com/Keyhole-Koro/snackTraveler.git
+	ignore = dirty
 [submodule "snackPersona"]
-	path = snackPersona
+	path = apps/persona
 	url = https://github.com/Keyhole-Koro/snackPersona.git
+	ignore = dirty
 [submodule "snackWeb"]
-	path = snackWeb
+	path = apps/web
 	url = https://github.com/Keyhole-Koro/snackWeb.git
+	ignore = dirty

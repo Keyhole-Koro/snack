@@ -12,7 +12,7 @@ fi
 echo "▸ Building Frontend..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-cd "$ROOT_DIR/snackWeb/frontend"
+cd "$ROOT_DIR/apps/web/frontend"
 npm install
 npm run build
 

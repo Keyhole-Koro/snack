@@ -5,8 +5,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-TERRAFORM_PERSONA_DIR="$ROOT_DIR/snackPersona/terraform"
-TERRAFORM_WEB_DIR="$ROOT_DIR/snackWeb/terraform"
+TERRAFORM_PERSONA_DIR="$ROOT_DIR/infra/terraform/persona"
+TERRAFORM_WEB_DIR="$ROOT_DIR/infra/terraform/web"
 
 echo "🍿 Deploying to LocalStack..."
 
@@ -23,7 +23,7 @@ export AWS_ENDPOINT_URL="http://localhost:4566"
 
 # 2. Create State Bucket
 echo "▸ Creating State Bucket..."
-"$ROOT_DIR/terraform/scripts/create-state-bucket.sh" local
+"$ROOT_DIR/infra/terraform/global/scripts/create-state-bucket.sh" local
 
 # 3. Apply snackPersona stack
 echo "▸ Initializing snackPersona Terraform..."

@@ -18,7 +18,7 @@ sleep 1
 # ── Backend ──
 # ── Backend ──
 echo "▸ Starting Backend (Go) on :13579 ..."
-cd "$ROOT_DIR/snackWeb/backend"
+cd "$ROOT_DIR/apps/web/backend"
 echo "  Building Go server..."
 go build -o server cmd/server/main.go
 ./server &

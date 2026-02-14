@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./snackPersona/terraform
+        working-directory: ./infra/terraform/persona
 
     steps:
       - name: Checkout
@@ -58,7 +58,7 @@ jobs:
     needs: terraform_persona
     defaults:
       run:
-        working-directory: ./snackWeb/terraform
+        working-directory: ./infra/terraform/web
 
     steps:
       - name: Checkout

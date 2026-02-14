@@ -20,7 +20,7 @@ services:
   # Local Backend (Go) connected to LocalStack
   backend:
     build:
-      context: ./snackWeb/backend
+      context: ./apps/web/backend
       dockerfile: Dockerfile.dev # We'll create this simplified dev Dockerfile
     environment:
       - AWS_ENDPOINT_URL=http://localstack:4566
@@ -35,7 +35,7 @@ services:
     networks:
       - snack-net
     volumes:
-      - ./snackWeb/backend:/app
+      - ./apps/web/backend:/app
 
   # Workspace for DevContainer
   workspace:

@@ -10,3 +10,5 @@ persona_data
 *.tfstate
 *.tfstate.*
 *.tfplan
+
+__pycache__
