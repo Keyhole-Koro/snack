@@ -5,7 +5,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-TERRAFORM_DIR="$ROOT_DIR/terraform"
+TERRAFORM_PERSONA_DIR="$ROOT_DIR/snackPersona/terraform"
+TERRAFORM_WEB_DIR="$ROOT_DIR/snackWeb/terraform"
 
 echo "🍿 Deploying to LocalStack..."
 
@@ -22,38 +23,32 @@ export AWS_ENDPOINT_URL="http://localhost:4566"
 
 # 2. Create State Bucket
 echo "▸ Creating State Bucket..."
-"$TERRAFORM_DIR/scripts/create-state-bucket.sh" local
+"$ROOT_DIR/terraform/scripts/create-state-bucket.sh" local
 
-# 3. Init Terraform
-echo "▸ Initializing Terraform..."
-cd "$TERRAFORM_DIR"
-
-# Configure backend to use S3 (in LocalStack)
-# We use partial configuration or specific backend file for local
-# For this template, we'll use a local backend file or command line args
-# But Terraform S3 backend needs endpoint override which is tricky in purely CLI args without a file.
-# The user asked for "backend settings" to be switched.
-# A common pattern for LocalStack is using `tflocal` or a backend block that points to local s3.
-# Let's assume we use a backend.tf or override it.
-# For simplicity in this script, we can generate a backend config or just use local state for local dev?
-# The prompt asked for "State Bucket (Terraform execution BEFORE need)".
-# So we MUST use S3 backend.
-
-# We create an override file for localstack backend
-# Configure backend using localstack.hcl
+# 3. Apply snackPersona stack
+echo "▸ Initializing snackPersona Terraform..."
+cd "$TERRAFORM_PERSONA_DIR"
 terraform init -reconfigure -backend-config=backends/localstack.hcl
 
-# 4. Import All
-echo "▸ Importing existing resources..."
-"$TERRAFORM_DIR/scripts/import_all.sh" tfvars/localstack.tfvars
+echo "▸ Importing snackPersona resources..."
+./scripts/import.sh tfvars/localstack.tfvars
 
-# 5. Plan
-echo "▸ Planning..."
+echo "▸ Planning snackPersona..."
 terraform plan -var-file="tfvars/localstack.tfvars" -out=tfplan
 
-# 6. Apply
-echo "▸ Applying..."
+echo "▸ Applying snackPersona..."
 terraform apply -auto-approve tfplan
 
-# Cleanup temporary backend file if desired, or keep it for subsequent runs.
-# rm backend_local.tf
+# 4. Apply snackWeb stack
+echo "▸ Initializing snackWeb Terraform..."
+cd "$TERRAFORM_WEB_DIR"
+terraform init -reconfigure -backend-config=backends/localstack.hcl
+
+echo "▸ Importing snackWeb resources..."
+./scripts/import.sh tfvars/localstack.tfvars
+
+echo "▸ Planning snackWeb..."
+terraform plan -var-file="tfvars/localstack.tfvars" -out=tfplan
+
+echo "▸ Applying snackWeb..."
+terraform apply -auto-approve tfplan

@@ -12,12 +12,12 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
-    name: Terraform
+  terraform_persona:
+    name: Terraform snackPersona
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./terraform
+        working-directory: ./snackPersona/terraform
 
     steps:
       - name: Checkout
@@ -39,20 +39,56 @@ jobs:
         run: |
           if [[ "${{ github.ref_name }}" == "prod" ]]; then
             echo "ENV_NAME=prod" >> $GITHUB_ENV
-            echo "TF_BACKEND_CONFIG=backends/prod.hcl" >> $GITHUB_ENV
-            echo "TF_VAR_FILE=tfvars/prod.tfvars" >> $GITHUB_ENV
           else
             echo "ENV_NAME=stage" >> $GITHUB_ENV
-            echo "TF_BACKEND_CONFIG=backends/stage.hcl" >> $GITHUB_ENV
-            echo "TF_VAR_FILE=tfvars/stage.tfvars" >> $GITHUB_ENV
           fi
 
-      - name: Terraform Init
-        run: terraform init -backend-config=${{ env.TF_BACKEND_CONFIG }}
+          if [[ "${{ github.ref }}" == "refs/heads/stage" || "${{ github.ref }}" == "refs/heads/prod" ]]; then
+            echo "APPLY_FLAG=true" >> $GITHUB_ENV
+          else
+            echo "APPLY_FLAG=false" >> $GITHUB_ENV
+          fi
 
-      - name: Terraform Plan
-        run: terraform plan -var-file=${{ env.TF_VAR_FILE }} -out=tfplan
+      - name: Terraform Run (snackPersona)
+        run: ./scripts/gha_terraform.sh "${{ env.ENV_NAME }}" "${{ env.APPLY_FLAG }}"
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/stage' || github.ref == 'refs/heads/prod'
-        run: terraform apply -auto-approve tfplan
+  terraform_web:
+    name: Terraform snackWeb
+    runs-on: ubuntu-latest
+    needs: terraform_persona
+    defaults:
+      run:
+        working-directory: ./snackWeb/terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Set Environment Variables
+        id: env
+        run: |
+          if [[ "${{ github.ref_name }}" == "prod" ]]; then
+            echo "ENV_NAME=prod" >> $GITHUB_ENV
+          else
+            echo "ENV_NAME=stage" >> $GITHUB_ENV
+          fi
+
+          if [[ "${{ github.ref }}" == "refs/heads/stage" || "${{ github.ref }}" == "refs/heads/prod" ]]; then
+            echo "APPLY_FLAG=true" >> $GITHUB_ENV
+          else
+            echo "APPLY_FLAG=false" >> $GITHUB_ENV
+          fi
+
+      - name: Terraform Run (snackWeb)
+        run: ./scripts/gha_terraform.sh "${{ env.ENV_NAME }}" "${{ env.APPLY_FLAG }}"

@@ -4,3 +4,9 @@
 persona_data
 
 *.zip
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
