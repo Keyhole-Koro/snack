@@ -18,24 +18,24 @@ services:
       - snack-net
 
   # Local Backend (Go) connected to LocalStack
-  backend:
-    build:
-      context: ./apps/web/backend
-      dockerfile: Dockerfile.dev # We'll create this simplified dev Dockerfile
-    environment:
-      - AWS_ENDPOINT_URL=http://localstack:4566
-      - AWS_REGION=us-east-1
-      - DYNAMODB_TABLE=SnackTable
-      - AWS_ACCESS_KEY_ID=test
-      - AWS_SECRET_ACCESS_KEY=test
-    ports:
-      - "13579:13579"
-    depends_on:
-      - localstack
-    networks:
-      - snack-net
-    volumes:
-      - ./apps/web/backend:/app
+  # backend:
+  #   build:
+  #     context: ./apps/web/backend
+  #     dockerfile: Dockerfile.dev # We'll create this simplified dev Dockerfile
+  #   environment:
+  #     - AWS_ENDPOINT_URL=http://localstack:4566
+  #     - AWS_REGION=us-east-1
+  #     - DYNAMODB_TABLE=SnackTable
+  #     - AWS_ACCESS_KEY_ID=test
+  #     - AWS_SECRET_ACCESS_KEY=test
+  #   ports:
+  #     - "13579:13579"
+  #   depends_on:
+  #     - localstack
+  #   networks:
+  #     - snack-net
+  #   volumes:
+  #     - ./apps/web/backend:/app
 
   # Workspace for DevContainer
   workspace:
