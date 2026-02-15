@@ -11,7 +11,7 @@ fi
 
 if [ "$ENV" == "local" ]; then
     BUCKET_NAME="terraform-state-local"
-    ENDPOINT="http://localhost:4566"
+    ENDPOINT="${AWS_ENDPOINT_URL:-http://localhost:4566}"
     PROFILE="default" # or whatever localstack uses
     REGION="us-east-1"
     # AWS CLI wrapper for LocalStack

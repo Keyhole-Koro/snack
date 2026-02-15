@@ -1,0 +1,12 @@
+{"timestamp": "2026-02-14T13:20:29.176854", "event_type": "POST", "agent_name": "GardenGnome", "content": "This is a mock response from the AI.", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.177531", "event_type": "POST", "agent_name": "WeekendWarrior", "content": "This is a mock response from the AI.", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.177719", "event_type": "PASS", "agent_name": "WeekendWarrior", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.177906", "event_type": "PASS", "agent_name": "GardenGnome", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178020", "event_type": "PASS", "agent_name": "GardenGnome", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178124", "event_type": "PASS", "agent_name": "WeekendWarrior", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178236", "event_type": "PASS", "agent_name": "WeekendWarrior", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178338", "event_type": "PASS", "agent_name": "GardenGnome", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178453", "event_type": "MEDIA_REACTION", "agent_name": "GardenGnome", "content": "This is a mock response from the AI.", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178559", "event_type": "MEDIA_REACTION", "agent_name": "WeekendWarrior", "content": "This is a mock response from the AI.", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178678", "event_type": "PASS", "agent_name": "WeekendWarrior", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}
+{"timestamp": "2026-02-14T13:20:29.178736", "event_type": "PASS", "agent_name": "GardenGnome", "content": "", "related_to": null, "metadata": {"topic": "Vegan Diet", "group_id": 0}}

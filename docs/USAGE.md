@@ -38,16 +38,36 @@
 
 ## Running the Simulation
 
-To start the evolution loop:
+Set required runtime environment variables first:
 
 ```bash
-python -m snackPersona.main --generations 5 --population 10
+export GEMINI_API_KEY="AIzaSy..."
+export GOOGLE_CSE_API_KEY="..."
+export GOOGLE_CSE_CX="..."
+export AWS_ENDPOINT_URL=http://localstack:4566
+export AWS_REGION=us-east-1
+export AWS_ACCESS_KEY_ID=test
+export AWS_SECRET_ACCESS_KEY=test
+export DYNAMODB_TABLE=SnackTable
+export PYTHONPATH=apps/persona/src
 ```
 
--   `--generations`: Number of evolutionary generations to run.
--   `--population`: Number of agents per generation.
+Then start the evolution loop:
 
-The simulation will output logs and save generation data to `persona_data/`.
+```bash
+python3 -m snackpersona.main --generations 4 --pop_size 4
+```
+
+- `--generations`: Number of evolutionary generations to run.
+- `--pop_size`: Number of agents per generation.
+
+At startup, the app now verifies:
+
+- Gemini API key presence (for Gemini presets)
+- Google Custom Search JSON API config presence (`GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`)
+- DynamoDB endpoint reachability and table availability
+- Web search/crawl connectivity
+- LLM connectivity
 
 ## Verification Scripts
 
